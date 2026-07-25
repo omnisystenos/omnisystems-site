@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#0d0d0d;--gold:#c9a84c;--gold2:#e8c97a;--cream:#f5f0e8;--muted:#888}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:#fff;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 64px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Playfair Display',serif;font-size:20px;letter-spacing:2px;color:var(--gold)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;letter-spacing:1px;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-btn{padding:10px 24px;border:1px solid rgba(201,168,76,.4);color:var(--gold);background:transparent;font-size:12px;letter-spacing:2px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .3s}
+.nav-btn:hover{background:var(--gold);color:var(--dark)}
+.hero{height:100vh;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,13,13,.3) 0%,rgba(13,13,13,.7) 60%,var(--dark) 100%)}
+.hero-img{position:absolute;inset:0;background:linear-gradient(135deg,#1a1006 0%,#2a1c0a 40%,#1a1a1a 100%)}
+/* Architectural lines */
+.arch-lines{position:absolute;inset:0;overflow:hidden}
+.arch-line{position:absolute;background:rgba(201,168,76,.08);transform-origin:center}
+.hero-content{position:relative;z-index:2;padding:0 64px 80px;max-width:800px}
+.hero-label{font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:20px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(48px,6vw,84px);line-height:1.0;margin-bottom:24px;color:#fff}
+h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.5);line-height:1.8;max-width:500px;margin-bottom:40px}
+.hero-btns{display:flex;gap:16px}
+.btn-gold{padding:15px 40px;background:var(--gold);color:var(--dark);border:none;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;font-family:'Inter',sans-serif;text-transform:uppercase;transition:all .3s}
+.btn-gold:hover{background:var(--gold2)}
+.btn-outline{padding:15px 40px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:12px;letter-spacing:2px;cursor:pointer;font-family:'Inter',sans-serif;text-transform:uppercase;transition:all .3s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.stats-bar{background:rgba(201,168,76,.08);border-top:1px solid rgba(201,168,76,.15);border-bottom:1px solid rgba(201,168,76,.15);padding:28px 64px;display:flex;gap:0}
+.stat{flex:1;text-align:center;border-right:1px solid rgba(201,168,76,.15)}
+.stat:last-child{border:none}
+.stat-n{font-family:'Playfair Display',serif;font-size:36px;color:var(--gold)}
+.stat-l{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-top:4px}
+.listings{padding:80px 64px;background:var(--dark)}
+.listings-inner{max-width:1300px;margin:0 auto}
+.sec-label{font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);margin-bottom:48px;line-height:1.1}
+.listings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.listing-card{background:#141414;border:1px solid rgba(255,255,255,.06);overflow:hidden;transition:all .4s}
+.listing-card:hover{transform:translateY(-6px);border-color:rgba(201,168,76,.2)}
+.listing-img{height:200px;position:relative;overflow:hidden}
+.listing-thumb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px}
+.listing-badge{position:absolute;top:16px;left:16px;padding:5px 12px;background:var(--gold);color:var(--dark);font-size:10px;font-weight:700;letter-spacing:2px}
+.listing-info{padding:24px}
+.listing-type{font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.listing-name{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:8px}
+.listing-loc{font-size:13px;color:var(--muted);margin-bottom:16px}
+.listing-details{display:flex;gap:16px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+.listing-price{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold)}
+.listing-price small{font-family:'Inter',sans-serif;font-size:12px;color:var(--muted)}
+footer{padding:40px 64px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center}
+.f-logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold)}
+.f-copy{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Real Estate</div>
+  <ul class="nav-links">
+    <li><a href="#">Buy</a></li><li><a href="#">Rent</a></li><li><a href="#">Commercial</a></li><li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-btn">View Listings</button>
+</nav>
+<section class="hero">
+  <div class="hero-img">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(201,168,76,.12),transparent 60%)"></div>
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.06" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+      <line x1="0" y1="600" x2="400" y2="0" stroke="#c9a84c" stroke-width="1"/>
+      <line x1="200" y1="600" x2="600" y2="0" stroke="#c9a84c" stroke-width="1"/>
+      <line x1="400" y1="600" x2="800" y2="0" stroke="#c9a84c" stroke-width="1"/>
+      <line x1="600" y1="600" x2="1000" y2="0" stroke="#c9a84c" stroke-width="1"/>
+      <rect x="150" y="100" width="200" height="300" fill="none" stroke="#c9a84c" stroke-width="1"/>
+      <rect x="420" y="150" width="180" height="250" fill="none" stroke="#c9a84c" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-label">Bahrain Property Group</div>
+    <h1>Find Your<br>Perfect<br><em>Property</em></h1>
+    <p class="hero-sub">Premium residential and commercial properties across Bahrain. From waterfront apartments to business districts — find where you belong.</p>
+    <div class="hero-btns">
+      <button class="btn-gold">Browse Listings</button>
+      <button class="btn-outline">Book Viewing</button>
+    </div>
+  </div>
+</section>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-n">340+</div><div class="stat-l">Active Listings</div></div>
+  <div class="stat"><div class="stat-n">12</div><div class="stat-l">Areas Covered</div></div>
+  <div class="stat"><div class="stat-n">BHD</div><div class="stat-l">Local Currency</div></div>
+  <div class="stat"><div class="stat-n">24hr</div><div class="stat-l">Response Time</div></div>
+</div>
+<section class="listings">
+  <div class="listings-inner">
+    <div class="sec-label">Featured Properties</div>
+    <h2 class="sec-title">Handpicked Listings<br>Across Bahrain</h2>
+    <div class="listings-grid">
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#1a2a3a,#0d1b2a)">
+          <div class="listing-thumb">🏢</div>
+          <div class="listing-badge">FOR SALE</div>
+        </div>
+        <div class="listing-info">
+          <div class="listing-type">Apartment</div>
+          <div class="listing-name">Seef Waterfront Residence</div>
+          <div class="listing-loc">📍 Seef District, Manama</div>
+          <div class="listing-details"><span>3 Beds</span><span>2 Baths</span><span>145 m²</span></div>
+          <div class="listing-price">85,000 BHD <small>/ total</small></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#2a1a0a,#1a1206)">
+          <div class="listing-thumb">🏠</div>
+          <div class="listing-badge">FOR RENT</div>
+        </div>
+        <div class="listing-info">
+          <div class="listing-type">Villa</div>
+          <div class="listing-name">Riffa Views Garden Villa</div>
+          <div class="listing-loc">📍 Riffa Views, Southern</div>
+          <div class="listing-details"><span>5 Beds</span><span>4 Baths</span><span>380 m²</span></div>
+          <div class="listing-price">2,800 BHD <small>/ month</small></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#0a1a0d,#061206)">
+          <div class="listing-thumb">🏗️</div>
+          <div class="listing-badge">OFF-PLAN</div>
+        </div>
+        <div class="listing-info">
+          <div class="listing-type">Commercial</div>
+          <div class="listing-name">Bahrain Bay Office Tower</div>
+          <div class="listing-loc">📍 Bahrain Bay, Capital</div>
+          <div class="listing-details"><span>Office</span><span>320 m²</span><span>Floor 12</span></div>
+          <div class="listing-price">From 120,000 BHD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="f-logo">Real Estate</div>
+  <div class="f-copy">© 2025 · Bahrain · All Rights Reserved</div>
+  <div class="f-copy">+973 XXXX XXXX</div>
+</footer>
+</body>
+</html>
+<style>
+@media(max-width:900px){
+  nav{padding:16px 24px}.nav-links,.nav-btn{display:none}
+  .hero-content{padding:0 24px 60px}
+  h1{font-size:48px}
+  .stats-bar{padding:20px 24px;flex-wrap:wrap;gap:0}
+  .stat{flex:0 0 50%;border-right:none;border-bottom:1px solid rgba(201,168,76,.15);padding:20px 0}
+  .stat:nth-child(even){border-left:1px solid rgba(201,168,76,.15)}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
+  .listings{padding:60px 24px}
+  .listings-grid{grid-template-columns:1fr}
+  footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
+}
+</style>

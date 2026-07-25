@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a1628;--navy2:#0f1f3d;--blue:#1a6bff;--sky:#e8f1ff;--white:#f8faff;--muted:#6b7fa3}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 52px;display:flex;justify-content:space-between;align-items:center;background:rgba(248,250,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(26,107,255,.1)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy)}
+.logo span{color:var(--blue)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--blue)}
+.nav-btn{padding:10px 24px;background:var(--blue);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;border-radius:4px}
+.hero{min-height:100vh;background:var(--navy);position:relative;overflow:hidden;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(26,107,255,.25),transparent 60%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(26,107,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,107,255,.06) 1px,transparent 1px);background-size:48px 48px}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:140px 80px 100px;max-width:1400px;margin:0 auto;width:100%;position:relative;z-index:2}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(26,107,255,.15);border:1px solid rgba(26,107,255,.3);color:#7eb0ff;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border-radius:40px;margin-bottom:28px}
+.hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:#7eb0ff;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(126,176,255,.5)}70%{box-shadow:0 0 0 8px rgba(126,176,255,0)}}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(40px,5vw,72px);color:#fff;line-height:1.05;margin-bottom:24px}
+h1 em{font-style:italic;color:#7eb0ff}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:40px;font-weight:300}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-blue{padding:15px 36px;background:var(--blue);color:#fff;border:none;font-size:14px;font-weight:600;cursor:pointer;border-radius:4px;font-family:'DM Sans',sans-serif;transition:all .3s}
+.btn-blue:hover{background:#0f54d4;transform:translateY(-2px)}
+.btn-outline{padding:15px 36px;background:transparent;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2);font-size:14px;cursor:pointer;border-radius:4px;font-family:'DM Sans',sans-serif;transition:all .3s}
+.btn-outline:hover{border-color:rgba(255,255,255,.5)}
+.hero-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:20px}
+.slot{display:flex;align-items:center;gap:16px;padding:16px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.07);transition:all .3s;cursor:pointer}
+.slot:hover{background:rgba(26,107,255,.15);border-color:rgba(26,107,255,.3)}
+.slot-time{font-size:15px;font-weight:600;color:#fff;min-width:64px}
+.slot-name{font-size:13px;color:rgba(255,255,255,.5)}
+.slot-badge{margin-left:auto;padding:4px 10px;border-radius:40px;font-size:10px;font-weight:700;letter-spacing:1px}
+.badge-open{background:rgba(16,185,129,.15);color:#34d399}
+.badge-full{background:rgba(239,68,68,.1);color:#f87171}
+.card-title{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:4px}
+.specialties{padding:80px;background:var(--white)}
+.specialties-inner{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:14px}
+.sec-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,48px);color:var(--navy);margin-bottom:48px;line-height:1.1}
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.spec-card{padding:36px;background:#fff;border:1px solid rgba(10,22,40,.08);transition:all .4s;position:relative;overflow:hidden}
+.spec-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,107,255,.05),transparent);opacity:0;transition:opacity .4s}
+.spec-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(10,22,40,.1)}
+.spec-card:hover::before{opacity:1}
+.spec-icon{font-size:32px;margin-bottom:20px;display:block}
+.spec-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:10px}
+.spec-text{font-size:14px;color:var(--muted);line-height:1.7}
+footer{padding:48px 80px;background:var(--navy);color:rgba(255,255,255,.5);display:flex;justify-content:space-between;align-items:center}
+footer .f-logo{font-family:'DM Serif Display',serif;color:#fff;font-size:20px}
+footer .f-logo span{color:#7eb0ff}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Medical <span>Clinic</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Doctors</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-btn">Book Appointment</button>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag"><span class="pulse"></span>Now Accepting Patients</div>
+      <h1>Your Health,<br><em>In Expert</em><br>Hands</h1>
+      <p class="hero-sub">Comprehensive medical care delivered with precision and compassion. From general practice to specialist consultations — all under one roof.</p>
+      <div class="hero-btns">
+        <button class="btn-blue">Book Appointment</button>
+        <button class="btn-outline">Our Services</button>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="card-title">Available Today</div>
+      <div class="slot"><div class="slot-time">9:00 AM</div><div><div style="color:#fff;font-size:14px;font-weight:500">Dr. Al Khalifa</div><div class="slot-name">General Practice</div></div><span class="slot-badge badge-open">OPEN</span></div>
+      <div class="slot"><div class="slot-time">10:30 AM</div><div><div style="color:#fff;font-size:14px;font-weight:500">Dr. Hassan</div><div class="slot-name">Cardiology</div></div><span class="slot-badge badge-full">FULL</span></div>
+      <div class="slot"><div class="slot-time">12:00 PM</div><div><div style="color:#fff;font-size:14px;font-weight:500">Dr. Nour</div><div class="slot-name">Pediatrics</div></div><span class="slot-badge badge-open">OPEN</span></div>
+      <div class="slot"><div class="slot-time">2:00 PM</div><div><div style="color:#fff;font-size:14px;font-weight:500">Dr. Al Rashid</div><div class="slot-name">Dermatology</div></div><span class="slot-badge badge-open">OPEN</span></div>
+      <button class="btn-blue" style="margin-top:8px">See All Available Slots</button>
+    </div>
+  </div>
+</section>
+<section class="specialties">
+  <div class="specialties-inner">
+    <div class="eyebrow">Our Specialties</div>
+    <h2 class="sec-title">Comprehensive Care<br>Across Every Discipline</h2>
+    <div class="spec-grid">
+      <div class="spec-card"><span class="spec-icon">🫀</span><div class="spec-title">Cardiology</div><div class="spec-text">Advanced heart care with the latest diagnostic technology and experienced specialists.</div></div>
+      <div class="spec-card"><span class="spec-icon">🦷</span><div class="spec-title">Dental Care</div><div class="spec-text">Complete dental services from routine checkups to cosmetic and restorative procedures.</div></div>
+      <div class="spec-card"><span class="spec-icon">👶</span><div class="spec-title">Pediatrics</div><div class="spec-text">Compassionate care tailored for children, from newborns to teenagers.</div></div>
+      <div class="spec-card"><span class="spec-icon">🧬</span><div class="spec-title">Lab & Diagnostics</div><div class="spec-text">On-site laboratory services with fast, accurate results to support clinical decisions.</div></div>
+      <div class="spec-card"><span class="spec-icon">🩺</span><div class="spec-title">General Practice</div><div class="spec-text">Routine checkups, chronic condition management, and preventive health screenings.</div></div>
+      <div class="spec-card"><span class="spec-icon">🧠</span><div class="spec-title">Mental Wellness</div><div class="spec-text">Confidential counseling and mental health support in a safe, welcoming environment.</div></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="f-logo">Medical <span>Clinic</span></div>
+  <div>Bahrain · Open Sat–Thu · 8am–8pm</div>
+  <div>+973 XXXX XXXX</div>
+</footer>
+</body>
+</html>
+<style>
+@media(max-width:900px){
+  nav{padding:16px 24px}.nav-links,.nav-btn{display:none}
+  .hero-inner{grid-template-columns:1fr;padding:100px 24px 60px;gap:40px}
+  .hero-card{display:none}
+  h1{font-size:40px}
+  .specialties{padding:60px 24px}
+  .spec-grid{grid-template-columns:1fr}
+  footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
+}
+</style>

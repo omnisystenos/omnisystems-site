@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Hotel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#080806;--gold:#b8986a;--gold2:#d4b483;--cream:#f5f2ec;--beige:#e8e0d0;--muted:#8a8070}
+body{font-family:'Jost',sans-serif;background:var(--dark);color:var(--cream);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 64px;display:flex;justify-content:space-between;align-items:center}
+nav.scrolled{background:rgba(8,8,6,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(184,152,106,.1)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;letter-spacing:6px;text-transform:uppercase;color:var(--gold)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:rgba(245,242,236,.5);text-decoration:none;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-btn{padding:10px 24px;border:1px solid rgba(184,152,106,.4);color:var(--gold);background:transparent;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all .4s}
+.nav-btn:hover{background:var(--gold);color:var(--dark)}
+
+.hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-visual{position:absolute;inset:0}
+.hotel-bg{width:100%;height:100%;background:linear-gradient(180deg,#1a150a 0%,#0d0b07 50%,var(--dark) 100%)}
+.hotel-illustration{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.12}
+.hotel-illustration svg{width:80%;max-width:900px;height:auto}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(184,152,106,.06) 0%,transparent 60%)}
+.vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(8,8,6,.8) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:760px;padding:0 32px}
+.hero-ornament{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:28px}
+.orn-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--gold))}
+.orn-line.right{background:linear-gradient(to left,transparent,var(--gold))}
+.orn-text{font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;opacity:.8}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,96px);font-weight:300;line-height:.95;margin-bottom:28px;letter-spacing:2px}
+h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:15px;color:rgba(245,242,236,.45);line-height:1.9;letter-spacing:.5px;margin-bottom:48px;font-weight:300}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-gold{padding:14px 44px;background:var(--gold);color:var(--dark);border:none;font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all .3s}
+.btn-gold:hover{background:var(--gold2)}
+.btn-outline{padding:14px 44px;background:transparent;border:1px solid rgba(184,152,106,.35);color:var(--gold);font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all .3s}
+.btn-outline:hover{background:rgba(184,152,106,.08)}
+
+.booking-bar{background:rgba(184,152,106,.07);border-top:1px solid rgba(184,152,106,.12);border-bottom:1px solid rgba(184,152,106,.12);padding:0 64px;display:flex;align-items:center;gap:0}
+.b-field{flex:1;padding:24px 28px;border-right:1px solid rgba(184,152,106,.1)}
+.b-field:last-child{border:none}
+.b-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.b-value{font-size:15px;color:var(--cream);font-weight:300}
+.b-btn{padding:0 36px;background:var(--gold);border:none;color:var(--dark);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;height:80px;white-space:nowrap;transition:all .3s}
+.b-btn:hover{background:var(--gold2)}
+
+.rooms{padding:100px 64px;background:var(--dark)}
+.rooms-inner{max-width:1300px;margin:0 auto}
+.sec-ornament{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.sec-orn-line{width:40px;height:1px;background:var(--gold);opacity:.5}
+.sec-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,56px);font-weight:300;line-height:1.05;margin-bottom:52px;letter-spacing:1px}
+.sec-title em{font-style:italic;color:var(--gold)}
+.rooms-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2px;background:rgba(184,152,106,.06)}
+.room-card{background:var(--dark);position:relative;overflow:hidden;min-height:360px;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer}
+.room-card.large{grid-row:span 2}
+.room-visual{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.1;transition:opacity .5s}
+.room-card:hover .room-visual{opacity:.18}
+.room-bg{position:absolute;inset:0;transition:transform .6s}
+.room-card:hover .room-bg{transform:scale(1.04)}
+.room-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,6,.95) 0%,transparent 60%)}
+.room-info{position:relative;z-index:2;padding:32px}
+.room-type{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.room-name{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.5vw,28px);font-weight:300;margin-bottom:8px}
+.room-price{font-size:14px;color:rgba(245,242,236,.5)}
+.room-price strong{color:var(--gold);font-weight:400}
+
+footer{padding:48px 64px;border-top:1px solid rgba(184,152,106,.1);display:flex;justify-content:space-between;align-items:center}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--gold)}
+.f-copy{font-size:12px;color:var(--muted);letter-spacing:1px}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="logo">Luxury Hotel</div>
+  <ul class="nav-links">
+    <li><a href="#">Rooms</a></li><li><a href="#">Dining</a></li><li><a href="#">Spa</a></li><li><a href="#">Events</a></li>
+  </ul>
+  <button class="nav-btn">Reserve a Room</button>
+</nav>
+<section class="hero">
+  <div class="hero-visual">
+    <div class="hotel-bg"></div>
+    <div class="hotel-illustration">
+      <svg viewBox="0 0 900 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="150" y="100" width="600" height="380" stroke="#b8986a" stroke-width="1"/>
+        <rect x="200" y="150" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <rect x="320" y="150" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <rect x="440" y="150" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <rect x="560" y="150" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <rect x="200" y="290" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <rect x="320" y="290" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <rect x="440" y="290" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <rect x="560" y="290" width="80" height="100" stroke="#b8986a" stroke-width="1"/>
+        <line x1="150" y1="100" x2="450" y2="20" stroke="#b8986a" stroke-width="1"/>
+        <line x1="750" y1="100" x2="450" y2="20" stroke="#b8986a" stroke-width="1"/>
+        <rect x="360" y="380" width="180" height="100" stroke="#b8986a" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="vignette"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-ornament">
+      <div class="orn-line"></div>
+      <div class="orn-text">Manama Waterfront · Est. 2018</div>
+      <div class="orn-line right"></div>
+    </div>
+    <h1>Where Luxury<br>Meets <em>Serenity</em></h1>
+    <p class="hero-sub">An iconic address on Bahrain's waterfront — where architectural grandeur, world-class cuisine, and intimate service converge into an unforgettable experience.</p>
+    <div class="hero-btns">
+      <button class="btn-gold">Reserve Your Stay</button>
+      <button class="btn-outline">Explore Rooms</button>
+    </div>
+  </div>
+</section>
+<div class="booking-bar">
+  <div class="b-field"><div class="b-label">Check In</div><div class="b-value">Select Date</div></div>
+  <div class="b-field"><div class="b-label">Check Out</div><div class="b-value">Select Date</div></div>
+  <div class="b-field"><div class="b-label">Guests</div><div class="b-value">2 Adults</div></div>
+  <div class="b-field"><div class="b-label">Room Type</div><div class="b-value">Any</div></div>
+  <button class="b-btn">Check Availability</button>
+</div>
+<section class="rooms">
+  <div class="rooms-inner">
+    <div class="sec-ornament"><div class="sec-orn-line"></div><div class="sec-eyebrow">Our Rooms & Suites</div></div>
+    <h2 class="sec-title">Spaces Designed<br>for <em>Exceptional Rest</em></h2>
+    <div class="rooms-grid">
+      <div class="room-card large" style="background:linear-gradient(135deg,#1a1208,#0f0c06)">
+        <div class="room-visual">🛏️</div>
+        <div class="room-overlay"></div>
+        <div class="room-info">
+          <div class="room-type">Presidential Suite</div>
+          <div class="room-name">The Bahrain<br>Grand Suite</div>
+          <div class="room-price">From <strong>450 BHD</strong> / night</div>
+        </div>
+      </div>
+      <div class="room-card" style="background:linear-gradient(135deg,#100e0a,#080706)">
+        <div class="room-visual">🌊</div>
+        <div class="room-overlay"></div>
+        <div class="room-info">
+          <div class="room-type">Deluxe Room</div>
+          <div class="room-name">Sea View Deluxe</div>
+          <div class="room-price">From <strong>120 BHD</strong> / night</div>
+        </div>
+      </div>
+      <div class="room-card" style="background:linear-gradient(135deg,#0e100a,#070806)">
+        <div class="room-visual">🌿</div>
+        <div class="room-overlay"></div>
+        <div class="room-info">
+          <div class="room-type">Junior Suite</div>
+          <div class="room-name">Garden Suite</div>
+          <div class="room-price">From <strong>200 BHD</strong> / night</div>
+        </div>
+      </div>
+      <div class="room-card" style="background:linear-gradient(135deg,#120a10,#080608)">
+        <div class="room-visual">✨</div>
+        <div class="room-overlay"></div>
+        <div class="room-info">
+          <div class="room-type">Premium Suite</div>
+          <div class="room-name">Royal Suite</div>
+          <div class="room-price">From <strong>320 BHD</strong> / night</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="f-logo">Luxury Hotel</div>
+  <div class="f-copy">© 2025 · Manama Waterfront, Bahrain</div>
+  <div class="f-copy">+973 XXXX XXXX</div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+</script>
+</body>
+</html>
+<style>
+@media(max-width:900px){
+  nav{padding:16px 24px}.nav-links,.nav-btn{display:none}
+  .hero-content{padding:0 24px;max-width:100%}
+  h1{font-size:48px}
+  .booking-bar{padding:0 24px;flex-direction:column}
+  .b-field{border-right:none;border-bottom:1px solid rgba(184,152,106,.1);padding:18px 0}
+  .b-btn{height:52px;width:100%;margin:8px 0}
+  .rooms{padding:60px 24px}
+  .rooms-grid{grid-template-columns:1fr}
+  .room-card.large{grid-row:auto}
+  footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
+}
+</style>

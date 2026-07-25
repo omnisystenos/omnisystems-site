@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Law Firm</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#0d0d0d;--violet:#4c1d95;--violet2:#6d28d9;--silver:#e8e6e0;--muted:#888;--white:#fafaf8}
+body{font-family:'Space Grotesk',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 64px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,248,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(13,13,13,.08)}
+.logo{font-family:'EB Garamond',serif;font-size:20px;letter-spacing:1px}
+.logo span{color:var(--violet2)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:400;transition:color .3s}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{padding:10px 24px;background:var(--ink);color:var(--white);border:none;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .3s;letter-spacing:.5px}
+.nav-btn:hover{background:var(--violet)}
+
+.hero{min-height:100vh;background:var(--ink);display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+.hero-left{padding:160px 80px 100px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.hero-right{position:relative;background:var(--violet);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-right::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--ink) 0%,transparent 30%);z-index:1}
+.scales{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:280px;opacity:.06;z-index:0;animation:scalesTilt 8s ease-in-out infinite}
+@keyframes scalesTilt{0%,100%{transform:rotate(-2deg) scale(1)}50%{transform:rotate(2deg) scale(1.03)}}
+.hero-eyebrow{font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:24px}
+h1{font-family:'EB Garamond',serif;font-size:clamp(44px,5.5vw,80px);color:var(--white);line-height:1.0;margin-bottom:28px;font-weight:400}
+h1 em{font-style:italic;color:#a78bfa}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.4);line-height:1.8;max-width:440px;margin-bottom:48px;font-weight:300}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-violet{padding:15px 36px;background:var(--violet2);color:var(--white);border:none;font-size:13px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .3s}
+.btn-violet:hover{background:#7c3aed;transform:translateY(-1px)}
+.btn-outline{padding:15px 36px;background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .3s}
+.btn-outline:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+.hero-awards{margin-top:60px;display:flex;gap:32px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
+.award{font-size:12px;color:rgba(255,255,255,.3);line-height:1.5}
+.award strong{display:block;color:rgba(255,255,255,.7);font-weight:500;margin-bottom:2px}
+
+.practice{padding:100px 80px;background:var(--white)}
+.practice-inner{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--violet2);margin-bottom:14px;font-weight:500}
+.sec-title{font-family:'EB Garamond',serif;font-size:clamp(28px,3.5vw,52px);color:var(--ink);margin-bottom:52px;line-height:1.05;font-weight:400}
+.sec-title em{font-style:italic}
+.practice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(13,13,13,.08)}
+.practice-card{padding:40px 36px;border-right:1px solid rgba(13,13,13,.08);border-bottom:1px solid rgba(13,13,13,.08);transition:all .4s;position:relative;overflow:hidden}
+.practice-card::before{content:'';position:absolute;left:0;top:0;width:3px;height:0;background:linear-gradient(to bottom,var(--violet),var(--violet2));transition:height .4s}
+.practice-card:hover{background:#f5f4ff}
+.practice-card:hover::before{height:100%}
+.practice-icon{font-size:28px;margin-bottom:20px;display:block}
+.practice-title{font-family:'EB Garamond',serif;font-size:20px;margin-bottom:10px;font-weight:500}
+.practice-text{font-size:13px;color:var(--muted);line-height:1.75}
+
+.team{padding:100px 80px;background:var(--ink)}
+.team-inner{max-width:1200px;margin:0 auto}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.04);margin-top:52px}
+.team-card{background:var(--ink);padding:36px;position:relative;overflow:hidden;transition:background .3s}
+.team-card:hover{background:#111}
+.team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--violet2));display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
+.team-name{font-family:'EB Garamond',serif;font-size:20px;color:var(--white);margin-bottom:4px}
+.team-role{font-size:12px;color:#a78bfa;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.team-bio{font-size:13px;color:rgba(255,255,255,.35);line-height:1.7}
+
+.contact-strip{padding:80px;background:var(--violet);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.cs-left h2{font-family:'EB Garamond',serif;font-size:clamp(28px,3.5vw,52px);color:var(--white);line-height:1.05;margin-bottom:16px;font-weight:400}
+.cs-left p{font-size:15px;color:rgba(255,255,255,.55);line-height:1.7}
+.cs-right{display:flex;flex-direction:column;gap:16px}
+.cs-input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--white);padding:14px 18px;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .3s}
+.cs-input:focus{border-color:rgba(255,255,255,.4)}
+.cs-input::placeholder{color:rgba(255,255,255,.3)}
+.cs-btn{padding:16px;background:var(--white);color:var(--violet);border:none;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .3s}
+.cs-btn:hover{background:#f0eeff}
+
+footer{padding:36px 80px;border-top:1px solid rgba(255,255,255,.06);background:var(--ink);display:flex;justify-content:space-between;align-items:center}
+.f-logo{font-family:'EB Garamond',serif;color:var(--white);font-size:18px}
+.f-logo span{color:#a78bfa}
+.f-copy{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Law <span>Firm</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Practice Areas</a></li><li><a href="#">Our Team</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-btn">Request Consultation</button>
+</nav>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Bahrain · Est. 2005 · Licensed Practitioners</div>
+    <h1>Legal Excellence,<br><em>Delivered</em><br>with Precision</h1>
+    <p class="hero-sub">Strategic legal counsel for individuals, businesses, and institutions across Bahrain and the GCC. We protect what matters most.</p>
+    <div class="hero-btns">
+      <button class="btn-violet">Request Consultation</button>
+      <button class="btn-outline">Our Practice Areas</button>
+    </div>
+    <div class="hero-awards">
+      <div class="award"><strong>20+ Years</strong>Combined Experience</div>
+      <div class="award"><strong>GCC Coverage</strong>Bahrain · KSA · UAE</div>
+      <div class="award"><strong>Arabic & English</strong>Bilingual Practice</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="scales">⚖️</div>
+  </div>
+</section>
+<section class="practice">
+  <div class="practice-inner">
+    <div class="eyebrow">Practice Areas</div>
+    <h2 class="sec-title">Expertise Across<br>Every <em>Legal Domain</em></h2>
+    <div class="practice-grid">
+      <div class="practice-card"><span class="practice-icon">🏢</span><div class="practice-title">Corporate Law</div><div class="practice-text">Company formation, mergers, acquisitions, and corporate governance for businesses of all sizes.</div></div>
+      <div class="practice-card"><span class="practice-icon">🏠</span><div class="practice-title">Real Estate</div><div class="practice-text">Property transactions, development agreements, leasing disputes, and title registration.</div></div>
+      <div class="practice-card"><span class="practice-icon">👨‍👩‍👧</span><div class="practice-title">Family Law</div><div class="practice-text">Marriage contracts, divorce proceedings, custody arrangements, and inheritance matters.</div></div>
+      <div class="practice-card"><span class="practice-icon">⚔️</span><div class="practice-title">Civil Litigation</div><div class="practice-text">Representation in Bahraini courts for commercial disputes, contract breaches, and civil claims.</div></div>
+      <div class="practice-card"><span class="practice-icon">💼</span><div class="practice-title">Employment Law</div><div class="practice-text">Labour disputes, contracts, redundancy, and HR compliance under Bahraini labour law.</div></div>
+      <div class="practice-card"><span class="practice-icon">📋</span><div class="practice-title">Contract Drafting</div><div class="practice-text">Precise, enforceable contracts for commercial transactions, partnerships, and services.</div></div>
+    </div>
+  </div>
+</section>
+<section class="team">
+  <div class="team-inner">
+    <div class="eyebrow" style="color:#a78bfa">Our Team</div>
+    <h2 class="sec-title" style="color:var(--white)">Practitioners Who<br><em style="color:#a78bfa">Know Their Field</em></h2>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar">⚖️</div><div class="team-name">Senior Partner</div><div class="team-role">Corporate & Commercial</div><div class="team-bio">20+ years in corporate law across Bahrain and the GCC. Former legal advisor to major financial institutions.</div></div>
+      <div class="team-card"><div class="team-avatar">🏛️</div><div class="team-name">Associate Partner</div><div class="team-role">Litigation & Dispute</div><div class="team-bio">Specialist in civil and commercial litigation with an extensive record in Bahraini courts.</div></div>
+      <div class="team-card"><div class="team-avatar">📜</div><div class="team-name">Senior Associate</div><div class="team-role">Real Estate & Property</div><div class="team-bio">Expertise in property law, development agreements, and real estate transactions across the Kingdom.</div></div>
+    </div>
+  </div>
+</section>
+<section class="contact-strip">
+  <div class="cs-left">
+    <h2>Request a<br>Consultation</h2>
+    <p>Speak with one of our practitioners. Initial consultations are confidential and obligation-free.</p>
+  </div>
+  <div class="cs-right">
+    <input class="cs-input" type="text" placeholder="Your Full Name">
+    <input class="cs-input" type="text" placeholder="Contact Number">
+    <input class="cs-input" type="text" placeholder="Area of Law">
+    <button class="cs-btn">Submit Request</button>
+  </div>
+</section>
+<footer>
+  <div class="f-logo">Law <span>Firm</span></div>
+  <div class="f-copy">© 2025 · Manama, Kingdom of Bahrain · All rights reserved</div>
+  <div class="f-copy">+973 XXXX XXXX</div>
+</footer>
+</body>
+</html>
+<style>
+@media(max-width:900px){
+  nav{padding:16px 24px}.nav-links,.nav-btn{display:none}
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-left{padding:100px 24px 60px}
+  h1{font-size:44px}
+  .hero-awards{flex-wrap:wrap;gap:20px}
+  .practice{padding:60px 24px}
+  .practice-grid{grid-template-columns:1fr}
+  .team{padding:60px 24px}
+  .team-grid{grid-template-columns:1fr}
+  .contact-strip{padding:60px 24px;grid-template-columns:1fr;gap:40px}
+  footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
+}
+</style>

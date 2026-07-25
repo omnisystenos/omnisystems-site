@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutoring & Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f7f9fc;--ink:#0f1523;--green:#059669;--green2:#10b981;--green3:#d1fae5;--muted:#6b7a99;--white:#ffffff;--border:rgba(15,21,35,.08)}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 60px;display:flex;justify-content:space-between;align-items:center;background:rgba(247,249,252,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-0.5px}
+.logo span{color:var(--green2)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{padding:10px 24px;background:var(--green);color:var(--white);border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;border-radius:6px;transition:all .3s}
+.nav-btn:hover{background:var(--green2);transform:translateY(-1px)}
+
+.hero{min-height:100vh;background:var(--ink);display:flex;align-items:center;position:relative;overflow:hidden;padding:140px 80px 100px}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.blob1{width:600px;height:600px;background:rgba(5,150,105,.15);top:-200px;right:-100px}
+.blob2{width:400px;height:400px;background:rgba(16,185,129,.08);bottom:-100px;left:100px}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1300px;margin:0 auto;width:100%;position:relative;z-index:2}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.2);border-radius:40px;font-size:12px;color:var(--green2);font-weight:600;letter-spacing:1px;margin-bottom:24px}
+h1{font-size:clamp(40px,5vw,72px);font-weight:800;color:var(--white);line-height:1.0;margin-bottom:24px;letter-spacing:-1px}
+h1 span{background:linear-gradient(135deg,var(--green2),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.45);line-height:1.8;max-width:480px;margin-bottom:40px;font-weight:300}
+.subjects{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.subject-tag{padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);border-radius:40px;font-size:13px;font-weight:500;transition:all .3s;cursor:pointer}
+.subject-tag:hover,.subject-tag.active{background:var(--green);border-color:var(--green);color:var(--white)}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-green{padding:14px 36px;background:linear-gradient(135deg,var(--green),var(--green2));color:var(--white);border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;border-radius:6px;transition:all .3s}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(5,150,105,.3)}
+.btn-ghost{padding:14px 36px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:14px;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif;border-radius:6px;transition:all .3s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
+.hero-card{background:rgba(255,255,255,.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:0}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.card-title{font-size:13px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:1px;text-transform:uppercase}
+.card-live{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--green2);font-weight:600}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green2);animation:livePulse 2s infinite}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.3}}
+.tutor-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;transition:all .3s;border-radius:8px;padding-left:8px;margin:0 -8px}
+.tutor-row:hover{background:rgba(16,185,129,.08)}
+.tutor-row:last-child{border:none}
+.tutor-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.tutor-name{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px}
+.tutor-sub{font-size:12px;color:rgba(255,255,255,.35)}
+.tutor-badge{margin-left:auto;padding:4px 10px;border-radius:40px;font-size:10px;font-weight:700}
+.badge-live{background:rgba(5,150,105,.2);color:var(--green2);border:1px solid rgba(5,150,105,.3)}
+.badge-soon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)}
+
+.features{padding:100px 80px;background:var(--white)}
+.features-inner{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:14px}
+.sec-title{font-size:clamp(28px,3.5vw,48px);font-weight:800;color:var(--ink);line-height:1.05;margin-bottom:52px;letter-spacing:-0.5px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature{padding:36px;border:1px solid var(--border);border-radius:12px;transition:all .4s;position:relative;overflow:hidden}
+.feature::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(16,185,129,.04),transparent);opacity:0;transition:opacity .4s}
+.feature:hover{transform:translateY(-4px);border-color:rgba(16,185,129,.25);box-shadow:0 16px 48px rgba(5,150,105,.08)}
+.feature:hover::before{opacity:1}
+.feature-icon{font-size:32px;margin-bottom:20px;display:block}
+.feature-title{font-size:18px;font-weight:700;margin-bottom:10px}
+.feature-text{font-size:14px;color:var(--muted);line-height:1.7}
+
+.pricing{padding:100px 80px;background:var(--bg)}
+.pricing-inner{max-width:1000px;margin:0 auto;text-align:center}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;text-align:left}
+.plan{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:32px;transition:all .4s}
+.plan.featured{background:var(--ink);border-color:transparent;transform:scale(1.03)}
+.plan-name{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:600}
+.plan.featured .plan-name{color:rgba(255,255,255,.4)}
+.plan-price{font-size:48px;font-weight:800;color:var(--ink);line-height:1;margin-bottom:4px;letter-spacing:-1px}
+.plan.featured .plan-price{color:var(--white)}
+.plan-price span{font-size:16px;font-weight:500;color:var(--muted)}
+.plan.featured .plan-price span{color:rgba(255,255,255,.4)}
+.plan-period{font-size:13px;color:var(--muted);margin-bottom:24px}
+.plan.featured .plan-period{color:rgba(255,255,255,.35)}
+.plan-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.plan-list li{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.plan.featured .plan-list li{color:rgba(255,255,255,.55)}
+.plan-list li::before{content:'✓';color:var(--green2);font-weight:700}
+.plan-btn{width:100%;padding:13px;background:var(--ink);color:var(--white);border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;border-radius:6px;transition:all .3s}
+.plan.featured .plan-btn{background:linear-gradient(135deg,var(--green),var(--green2))}
+.plan-btn:hover{opacity:.85;transform:translateY(-1px)}
+
+footer{padding:40px 80px;background:var(--ink);display:flex;justify-content:space-between;align-items:center}
+.f-logo{font-size:18px;font-weight:800;color:var(--white)}
+.f-logo span{color:var(--green2)}
+.f-copy{font-size:13px;color:rgba(255,255,255,.3)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Tutor<span>Hub</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Subjects</a></li><li><a href="#">Tutors</a></li><li><a href="#">Pricing</a></li><li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-btn">Book Free Trial</button>
+</nav>
+<section class="hero">
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">⭐ Bahrain's #1 Tutoring Platform</div>
+      <h1>Unlock Your<br><span>Full Potential</span><br>Today</h1>
+      <p class="hero-sub">Expert tutors across every subject, available online and in-person. Personalised learning that actually gets results.</p>
+      <div class="subjects">
+        <span class="subject-tag active">Mathematics</span>
+        <span class="subject-tag">Sciences</span>
+        <span class="subject-tag">English</span>
+        <span class="subject-tag">Arabic</span>
+        <span class="subject-tag">Physics</span>
+        <span class="subject-tag">Chemistry</span>
+      </div>
+      <div class="hero-btns">
+        <button class="btn-green">Book Free Trial Session</button>
+        <button class="btn-ghost">Meet Our Tutors</button>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="card-header">
+        <div class="card-title">Live Sessions</div>
+        <div class="card-live"><div class="live-dot"></div>3 Live Now</div>
+      </div>
+      <div class="tutor-row"><div class="tutor-av" style="background:rgba(16,185,129,.15)">📐</div><div><div class="tutor-name">Mr. Ahmad</div><div class="tutor-sub">Mathematics · Grade 10-12</div></div><span class="tutor-badge badge-live">LIVE</span></div>
+      <div class="tutor-row"><div class="tutor-av" style="background:rgba(99,102,241,.15)">🧪</div><div><div class="tutor-name">Ms. Fatima</div><div class="tutor-sub">Chemistry · IGCSE</div></div><span class="tutor-badge badge-live">LIVE</span></div>
+      <div class="tutor-row"><div class="tutor-av" style="background:rgba(245,158,11,.15)">📖</div><div><div class="tutor-name">Mr. James</div><div class="tutor-sub">English · All Levels</div></div><span class="tutor-badge badge-live">LIVE</span></div>
+      <div class="tutor-row"><div class="tutor-av" style="background:rgba(239,68,68,.15)">⚛️</div><div><div class="tutor-name">Dr. Sara</div><div class="tutor-sub">Physics · A-Level</div></div><span class="tutor-badge badge-soon">IN 30 MIN</span></div>
+      <div style="margin-top:20px">
+        <button class="btn-green" style="width:100%">Browse All Tutors</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="features">
+  <div class="features-inner">
+    <div class="eyebrow">Why Choose Us</div>
+    <h2 class="sec-title">Learning That Actually<br>Gets Results</h2>
+    <div class="features-grid">
+      <div class="feature"><span class="feature-icon">🎯</span><div class="feature-title">Personalised Plans</div><div class="feature-text">Every student gets a tailored learning plan based on their level, pace, and goals.</div></div>
+      <div class="feature"><span class="feature-icon">🏅</span><div class="feature-title">Vetted Tutors</div><div class="feature-text">All tutors are qualified, background-checked, and rated by real students and parents.</div></div>
+      <div class="feature"><span class="feature-icon">📱</span><div class="feature-title">Online or In-Person</div><div class="feature-text">Choose sessions at home, online, or at our Manama centre — whatever works for you.</div></div>
+      <div class="feature"><span class="feature-icon">📊</span><div class="feature-title">Progress Tracking</div><div class="feature-text">Parents receive regular progress reports so you always know where your child stands.</div></div>
+      <div class="feature"><span class="feature-icon">🔁</span><div class="feature-title">Flexible Scheduling</div><div class="feature-text">Book, reschedule, or cancel sessions anytime. No long-term contracts required.</div></div>
+      <div class="feature"><span class="feature-icon">✅</span><div class="feature-title">Results Guaranteed</div><div class="feature-text">If you don't see improvement in 4 sessions, your next session is completely free.</div></div>
+    </div>
+  </div>
+</section>
+<section class="pricing">
+  <div class="pricing-inner">
+    <div class="eyebrow" style="text-align:center">Pricing</div>
+    <h2 class="sec-title">Simple, Fair Pricing</h2>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-name">Basic</div>
+        <div class="plan-price">18<span> BHD</span></div>
+        <div class="plan-period">per session</div>
+        <ul class="plan-list">
+          <li>1-on-1 Session (60 min)</li>
+          <li>Any Subject</li>
+          <li>Progress Notes</li>
+        </ul>
+        <button class="plan-btn">Book Session</button>
+      </div>
+      <div class="plan featured">
+        <div class="plan-name">Monthly Pack</div>
+        <div class="plan-price">60<span> BHD</span></div>
+        <div class="plan-period">per month · 4 sessions</div>
+        <ul class="plan-list">
+          <li>4 Sessions / Month</li>
+          <li>Same Tutor</li>
+          <li>Monthly Progress Report</li>
+          <li>WhatsApp Support</li>
+        </ul>
+        <button class="plan-btn">Get Pack</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Intensive</div>
+        <div class="plan-price">110<span> BHD</span></div>
+        <div class="plan-period">per month · 8 sessions</div>
+        <ul class="plan-list">
+          <li>8 Sessions / Month</li>
+          <li>2 Subjects Included</li>
+          <li>Exam Prep Materials</li>
+          <li>Parent Consultations</li>
+        </ul>
+        <button class="plan-btn">Get Intensive</button>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="f-logo">Tutor<span>Hub</span></div>
+  <div class="f-copy">© 2025 · Manama, Bahrain · All rights reserved</div>
+  <div class="f-copy">+973 XXXX XXXX</div>
+</footer>
+</body>
+</html>
+<style>
+@media(max-width:900px){
+  nav{padding:16px 24px}.nav-links,.nav-btn{display:none}
+  .hero{padding:100px 24px 60px;grid-template-columns:1fr;gap:40px}
+  .hero-card{display:none}
+  h1{font-size:44px}
+  .features{padding:60px 24px}
+  .features-grid{grid-template-columns:1fr}
+  .pricing{padding:60px 24px}
+  .plans{grid-template-columns:1fr;gap:16px}
+  .plan.featured{transform:none}
+  footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
+}
+</style>
