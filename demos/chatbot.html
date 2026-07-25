@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp AI Chatbot</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#030a05;--green:#25d366;--green2:#128c7e;--green3:rgba(37,211,102,.12);--white:#f0f4f0;--muted:#4a6b52;--border:rgba(37,211,102,.12)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 60px;display:flex;justify-content:space-between;align-items:center;background:rgba(3,10,5,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:2px;color:var(--green)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:rgba(240,244,240,.4);text-decoration:none;font-size:13px;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--green)}
+.nav-btn{padding:10px 24px;background:var(--green);color:#000;font-size:12px;font-weight:700;letter-spacing:1px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all .3s;border-radius:4px}
+.nav-btn:hover{background:#2ee875}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:140px 80px 100px;gap:80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(37,211,102,.05),transparent 60%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(37,211,102,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(37,211,102,.03) 1px,transparent 1px);background-size:56px 56px}
+.hero-left{position:relative;z-index:2}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;background:var(--green3);border:1px solid rgba(37,211,102,.2);border-radius:4px;font-size:11px;font-weight:700;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px}
+.tag-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:tagPulse 2s infinite}
+@keyframes tagPulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 8px rgba(37,211,102,0)}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(40px,5vw,72px);font-weight:800;line-height:.97;margin-bottom:24px;letter-spacing:-1px}
+h1 span{background:linear-gradient(135deg,var(--green),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:16px;color:rgba(240,244,240,.45);line-height:1.8;max-width:460px;margin-bottom:40px;font-weight:300}
+.use-cases{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+.use-case{display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(240,244,240,.6)}
+.use-case::before{content:'✓';color:var(--green);font-weight:700;font-size:16px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-green{padding:14px 36px;background:var(--green);color:#000;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;border-radius:4px;transition:all .3s}
+.btn-green:hover{background:#2ee875;transform:translateY(-1px)}
+.btn-ghost{padding:14px 36px;background:transparent;border:1px solid var(--border);color:rgba(240,244,240,.6);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;border-radius:4px;transition:all .3s}
+.btn-ghost:hover{border-color:var(--green);color:var(--green)}
+
+/* Chat demo */
+.chat-demo{position:relative;z-index:2}
+.phone-frame{background:#111;border:2px solid rgba(37,211,102,.15);border-radius:32px;overflow:hidden;max-width:340px;margin:0 auto;box-shadow:0 40px 120px rgba(37,211,102,.1)}
+.phone-top{background:#1a1a1a;padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(37,211,102,.1)}
+.phone-av{width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:16px}
+.phone-info{flex:1}
+.phone-name{font-size:14px;font-weight:600;color:var(--white)}
+.phone-status{font-size:11px;color:var(--green);display:flex;align-items:center;gap:4px}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--green)}
+.phone-body{background:#0d1117;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:420px}
+.msg{max-width:80%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5;position:relative}
+.msg.bot{background:#1a2a1c;color:rgba(240,244,240,.85);border-radius:4px 12px 12px 12px;align-self:flex-start}
+.msg.user{background:linear-gradient(135deg,#128c7e,#075e54);color:var(--white);border-radius:12px 4px 12px 12px;align-self:flex-end}
+.msg-time{font-size:10px;opacity:.4;margin-top:4px;text-align:right}
+.typing{display:flex;gap:4px;align-items:center;padding:10px 14px;background:#1a2a1c;border-radius:4px 12px 12px 12px;width:60px;align-self:flex-start}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--green);opacity:.4;animation:typingDot 1.2s ease-in-out infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.quick-replies{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.qr{padding:5px 10px;background:transparent;border:1px solid rgba(37,211,102,.3);color:var(--green);font-size:11px;border-radius:20px;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+.qr:hover{background:var(--green);color:#000}
+.phone-input{background:#1a1a1a;border-top:1px solid rgba(37,211,102,.1);padding:12px 16px;display:flex;align-items:center;gap:10px}
+.p-input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--white);padding:8px 12px;border-radius:20px;font-size:12px;font-family:'Inter',sans-serif;outline:none}
+.p-send{width:32px;height:32px;background:var(--green);border:none;border-radius:50%;cursor:pointer;color:#000;font-size:14px;display:flex;align-items:center;justify-content:center}
+
+.how{padding:100px 80px;background:#060e07}
+.how-inner{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:14px;font-family:'Syne',sans-serif}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,52px);font-weight:800;line-height:1.0;margin-bottom:52px;letter-spacing:-0.5px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,var(--green),var(--green2))}
+.step{padding:0 20px;text-align:center;position:relative}
+.step-n{width:56px;height:56px;border:1px solid rgba(37,211,102,.3);background:var(--bg);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--green);position:relative;z-index:2;transition:all .3s}
+.step:hover .step-n{background:var(--green3);border-color:var(--green)}
+.step-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px}
+.step-text{font-size:13px;color:rgba(240,244,240,.4);line-height:1.7}
+
+.use-cases-section{padding:100px 80px;background:var(--bg)}
+.uc-inner{max-width:1200px;margin:0 auto}
+.uc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-top:52px}
+.uc-card{background:var(--bg);padding:36px;transition:background .3s;border-bottom:2px solid transparent;transition:all .3s}
+.uc-card:hover{background:#060e07;border-bottom-color:var(--green)}
+.uc-icon{font-size:32px;margin-bottom:20px;display:block}
+.uc-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
+.uc-text{font-size:13px;color:rgba(240,244,240,.4);line-height:1.7}
+
+footer{padding:40px 80px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.f-logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:2px;color:var(--green)}
+.f-copy{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">AI CHATBOT</div>
+  <ul class="nav-links">
+    <li><a href="#">Features</a></li><li><a href="#">Use Cases</a></li><li><a href="#">Pricing</a></li><li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-btn">Get a Demo</button>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-left">
+    <div class="hero-tag"><span class="tag-dot"></span>WhatsApp AI · Live 24/7</div>
+    <h1>Your Business<br>Replies <span>Itself.</span><br>Instantly.</h1>
+    <p class="hero-sub">An AI assistant that handles customer questions, bookings, and follow-ups on WhatsApp — automatically, around the clock, in Arabic and English.</p>
+    <div class="use-cases">
+      <div class="use-case">Answers FAQs instantly — no human needed</div>
+      <div class="use-case">Books appointments directly in WhatsApp</div>
+      <div class="use-case">Sends order updates and confirmations</div>
+      <div class="use-case">Works in Arabic and English</div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-green">Get Your Chatbot</button>
+      <button class="btn-ghost">See Live Demo</button>
+    </div>
+  </div>
+  <div class="chat-demo">
+    <div class="phone-frame">
+      <div class="phone-top">
+        <div class="phone-av">🤖</div>
+        <div class="phone-info">
+          <div class="phone-name">Business Assistant</div>
+          <div class="phone-status"><div class="status-dot"></div>Online · Replies instantly</div>
+        </div>
+      </div>
+      <div class="phone-body" id="chatBody">
+        <div class="msg bot">👋 Hi! Welcome to our business. How can I help you today?<div class="msg-time">12:01 PM ✓✓</div></div>
+        <div class="quick-replies">
+          <button class="qr" onclick="sendMsg('Book appointment')">📅 Book appointment</button>
+          <button class="qr" onclick="sendMsg('See services')">📋 Services</button>
+          <button class="qr" onclick="sendMsg('What are your hours?')">🕐 Hours</button>
+        </div>
+        <div class="msg user">What are your opening hours?<div class="msg-time">12:02 PM ✓✓</div></div>
+        <div class="msg bot">⏰ We're open <strong>Saturday – Thursday, 9am to 9pm</strong>. We're closed on Fridays.<br><br>Would you like to book an appointment?<div class="msg-time">12:02 PM ✓✓</div></div>
+        <div class="msg user">Yes, I'd like to book for tomorrow<div class="msg-time">12:03 PM ✓✓</div></div>
+        <div class="typing" id="typing"><span></span><span></span><span></span></div>
+      </div>
+      <div class="phone-input">
+        <input class="p-input" type="text" placeholder="Type a message..." id="chatInput" onkeydown="if(event.key==='Enter')sendCustomMsg()">
+        <button class="p-send" onclick="sendCustomMsg()">➤</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="how">
+  <div class="how-inner">
+    <div class="eyebrow">How It Works</div>
+    <h2 class="sec-title">Set Up Once.<br>Works Forever.</h2>
+    <div class="steps">
+      <div class="step"><div class="step-n">01</div><div class="step-title">We Build It</div><div class="step-text">We configure the AI with your business info, services, and FAQs.</div></div>
+      <div class="step"><div class="step-n">02</div><div class="step-title">You Connect</div><div class="step-text">Link your WhatsApp Business number — takes 10 minutes.</div></div>
+      <div class="step"><div class="step-n">03</div><div class="step-title">It Goes Live</div><div class="step-text">The AI starts handling messages immediately, 24/7.</div></div>
+      <div class="step"><div class="step-n">04</div><div class="step-title">You Review</div><div class="step-text">Check conversation logs and updates whenever you want.</div></div>
+    </div>
+  </div>
+</section>
+<section class="use-cases-section">
+  <div class="uc-inner">
+    <div class="eyebrow">Use Cases</div>
+    <h2 class="sec-title">Works for Any<br>Business Type</h2>
+    <div class="uc-grid">
+      <div class="uc-card"><span class="uc-icon">💇</span><div class="uc-title">Salons & Spas</div><div class="uc-text">Auto-confirm bookings, send reminders, answer service questions without picking up the phone.</div></div>
+      <div class="uc-card"><span class="uc-icon">🍽️</span><div class="uc-title">Restaurants</div><div class="uc-text">Take reservations, share menus, confirm orders, and handle table requests automatically.</div></div>
+      <div class="uc-card"><span class="uc-icon">🏥</span><div class="uc-title">Clinics</div><div class="uc-text">Book appointments, send doctor availability, and handle patient FAQs at any hour.</div></div>
+      <div class="uc-card"><span class="uc-icon">🛒</span><div class="uc-title">Retail & E-commerce</div><div class="uc-text">Track orders, answer product questions, and confirm deliveries without a support team.</div></div>
+      <div class="uc-card"><span class="uc-icon">🏠</span><div class="uc-title">Real Estate</div><div class="uc-text">Qualify leads, share listings, and book viewings automatically around the clock.</div></div>
+      <div class="uc-card"><span class="uc-icon">🎓</span><div class="uc-title">Education</div><div class="uc-text">Answer course questions, confirm enrolments, and send session reminders automatically.</div></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="f-logo">AI CHATBOT</div>
+  <div class="f-copy">© 2025 · Powered by OmniSystems · Bahrain</div>
+  <div class="f-copy">+973 XXXX XXXX</div>
+</footer>
+<script>
+const responses = {
+  'book appointment': "📅 Sure! Please pick a time slot:\n\n• Tomorrow 10:00 AM\n• Tomorrow 2:00 PM\n• Tomorrow 4:30 PM\n\nReply with your preferred time!",
+  'see services': "📋 Here are our services:\n\n✂️ Haircut - 8 BHD\n💆 Massage - 25 BHD\n💅 Manicure - 12 BHD\n\nWould you like to book?",
+  "what are your hours?": "⏰ We're open Sat–Thu, 9am–9pm. Closed Fridays.",
+  'default': "Got it! Let me connect you with our team for that. In the meantime, is there anything else I can help with? 😊"
+};
+function addMsg(text,type){
+  const d=document.getElementById('chatBody');
+  const t=document.getElementById('typing');
+  const m=document.createElement('div');
+  m.className='msg '+type;
+  m.innerHTML=text.replace(/\n/g,'<br>')+'<div class="msg-time">'+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' ✓✓</div>';
+  d.insertBefore(m,t);
+  d.scrollTop=d.scrollHeight;
+}
+function sendMsg(text){
+  addMsg(text,'user');
+  const typing=document.getElementById('typing');
+  typing.style.display='flex';
+  setTimeout(()=>{
+    typing.style.display='none';
+    const reply=responses[text.toLowerCase()]||responses['default'];
+    addMsg(reply,'bot');
+  },1200);
+}
+function sendCustomMsg(){
+  const input=document.getElementById('chatInput');
+  if(!input.value.trim())return;
+  sendMsg(input.value);
+  input.value='';
+}
+</script>
+</body>
+</html>
+<style>
+@media(max-width:900px){
+  nav{padding:16px 24px}.nav-links,.nav-btn{display:none}
+  .hero{grid-template-columns:1fr;padding:100px 24px 60px;gap:40px}
+  h1{font-size:44px}
+  .phone-frame{max-width:300px}
+  .how{padding:60px 24px}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .steps::before{display:none}
+  .use-cases-section{padding:60px 24px}
+  .uc-grid{grid-template-columns:1fr}
+  footer{padding:32px 24px;flex-direction:column;gap:12px;text-align:center}
+}
+</style>
