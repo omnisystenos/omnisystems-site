@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniSystems — Digital Solutions Bahrain</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cyan:#00d4ff;--cdim:rgba(0,212,255,.1);
+  --violet:#7c3aed;--vdim:rgba(124,58,237,.1);
+  --rose:#f43f5e;
+  --bg:#050508;--bg2:#080810;--bg3:#0d0d18;
+  --border:rgba(255,255,255,.07);--text:#f0f0f8;--muted:#5a5a72;--muted2:#8888a0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* PRELOADER */
+#preloader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .8s,visibility .8s}
+#preloader.out{opacity:0;visibility:hidden;pointer-events:none}
+.pre-logo{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:8px;background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:pp 1.5s ease-in-out infinite}
+.pre-track{width:200px;height:1px;background:var(--border);overflow:hidden;position:relative}
+.pre-fill{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,var(--cyan),var(--violet));animation:pf 1.5s ease-in-out infinite}
+@keyframes pp{0%,100%{opacity:.15}50%{opacity:1}}
+@keyframes pf{0%{left:-100%}100%{left:100%}}
+
+/* GRAIN */
+.grain{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* CURSOR */
+.cursor{position:fixed;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.04) 0%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:left .5s ease-out,top .5s ease-out}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 52px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
+nav.s{background:rgba(5,5,8,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nlogo{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;letter-spacing:5px;background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nlinks{display:flex;gap:36px;list-style:none}
+.nlinks a{color:var(--muted2);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;transition:color .3s;position:relative}
+.nlinks a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s}
+.nlinks a:hover{color:var(--cyan)}
+.nlinks a:hover::after{width:100%}
+.ncta{padding:10px 28px;background:transparent;border:1px solid rgba(0,212,255,.35);color:var(--cyan);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+.ncta:hover{background:var(--cyan);color:var(--bg)}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hbg span{width:22px;height:1.5px;background:var(--cyan);display:block;transition:all .3s}
+.mmenu{display:none;position:fixed;inset:0;top:68px;background:rgba(5,5,8,.98);z-index:199;flex-direction:column;align-items:center;justify-content:center;gap:36px}
+.mmenu.open{display:flex}
+.mmenu a{color:var(--text);text-decoration:none;font-family:'Syne',sans-serif;font-size:28px;font-weight:700;letter-spacing:4px;transition:color .3s}
+.mmenu a:hover{color:var(--cyan)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:140px 52px 100px;text-align:center}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse at center,black 15%,transparent 72%)}
+.orb{position:absolute;border-radius:50%;filter:blur(140px);pointer-events:none;animation:ofl 14s ease-in-out infinite}
+.o1{width:800px;height:800px;background:rgba(0,212,255,.05);top:-300px;left:-300px}
+.o2{width:700px;height:700px;background:rgba(124,58,237,.05);bottom:-300px;right:-300px;animation-delay:7s}
+.o3{width:350px;height:350px;background:rgba(244,63,94,.04);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:3.5s}
+@keyframes ofl{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(50px,-50px) scale(1.08)}}
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.p{position:absolute;border-radius:50%;background:var(--cyan);opacity:0;animation:pr linear infinite}
+@keyframes pr{0%{opacity:0;transform:translateY(0) scale(0)}10%{opacity:.5}90%{opacity:.05}100%{opacity:0;transform:translateY(-100vh) scale(1)}}
+.hcontent{position:relative;z-index:2;max-width:1000px}
+.hbadge{display:inline-flex;align-items:center;gap:10px;padding:9px 22px;border:1px solid rgba(0,212,255,.18);background:rgba(0,212,255,.04);backdrop-filter:blur(12px);font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:36px;letter-spacing:2.5px;text-transform:uppercase;opacity:0;animation:fup .8s ease forwards .3s}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:bdp 2s infinite}
+@keyframes bdp{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,212,255,.5)}70%{box-shadow:0 0 0 8px rgba(0,212,255,0)}}
+h1.hero-h{font-family:'Syne',sans-serif;font-size:clamp(44px,8vw,100px);font-weight:800;line-height:.95;margin-bottom:20px;opacity:0;animation:fup .9s ease forwards .55s;letter-spacing:-2px}
+.ha{background:linear-gradient(135deg,var(--cyan) 0%,var(--violet) 55%,var(--rose) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block}
+
+/* Ticker */
+.ticker-wrap{width:100%;overflow:hidden;margin:28px 0 36px;opacity:0;animation:fi 1s ease forwards .85s;mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent)}
+.ticker{display:flex;white-space:nowrap;animation:tick 24s linear infinite}
+.ti{display:inline-flex;align-items:center;gap:20px;padding:0 20px;font-size:11px;color:var(--muted2);letter-spacing:3px;text-transform:uppercase;font-weight:500}
+.ts{color:var(--cyan);opacity:.35}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.hsub{font-size:17px;color:var(--muted2);max-width:560px;margin:0 auto 52px;line-height:1.85;font-weight:300;opacity:0;animation:fup .8s ease forwards 1s}
+.hbtns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fup .8s ease forwards 1.15s}
+.bp{padding:16px 44px;background:var(--cyan);color:var(--bg);font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif;text-decoration:none;display:inline-block}
+.bp:hover{background:#00bfdf;transform:translateY(-2px);box-shadow:0 14px 44px rgba(0,212,255,.28)}
+.bg{padding:16px 44px;background:transparent;border:1px solid var(--border);color:var(--text);font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif;text-decoration:none;display:inline-block}
+.bg:hover{border-color:var(--cyan);color:var(--cyan)}
+.hscroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fi 1s ease forwards 1.5s}
+.stxt{font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase}
+.sline{width:1px;height:56px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:sb 2s ease-in-out infinite}
+@keyframes sb{0%,100%{opacity:.2}50%{opacity:1}}
+@keyframes fup{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+
+/* MARQUEE */
+.mstrip{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;overflow:hidden}
+.minner{display:flex;white-space:nowrap;animation:mq 32s linear infinite}
+.mi{display:inline-flex;align-items:center;gap:20px;padding:0 32px;font-size:11px;color:var(--muted2);letter-spacing:2.5px;text-transform:uppercase;font-weight:500;flex-shrink:0}
+.md{width:4px;height:4px;border-radius:50%;background:var(--cyan);opacity:.5}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION COMMONS */
+section{padding:110px 52px}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:16px}
+.stitle{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,56px);font-weight:800;line-height:1.05;letter-spacing:-.5px}
+.ssub{font-size:15px;color:var(--muted2);line-height:1.85;max-width:520px;margin-top:16px}
+.inner{max-width:1200px;margin:0 auto}
+
+/* FUTURE */
+.future{background:var(--bg)}
+.future-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:72px}
+.fp{font-size:16px;color:var(--muted2);line-height:1.9;margin-bottom:22px;font-weight:300}
+.fp strong{color:var(--text);font-weight:500}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.pillar{background:var(--bg);padding:40px 32px;position:relative;overflow:hidden;transition:background .3s}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.pillar:hover{background:var(--bg2)}
+.pillar:hover::before{transform:scaleX(1)}
+.pillar-icon{font-size:26px;margin-bottom:18px;display:block}
+.pillar-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px}
+.pillar-text{font-size:13px;color:var(--muted2);line-height:1.75}
+
+/* PORTFOLIO */
+.port-section{padding:110px 0;background:var(--bg2);overflow:hidden}
+.port-header{padding:0 52px;max-width:1200px;margin:0 auto 64px}
+
+/* Carousel */
+.ctrack{display:flex;gap:20px;padding:0 52px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;cursor:grab;padding-bottom:8px}
+.ctrack::-webkit-scrollbar{display:none}
+.ctrack.drag{cursor:grabbing;user-select:none}
+
+.pcard{flex:0 0 400px;scroll-snap-align:start;border:1px solid var(--border);background:var(--bg3);position:relative;overflow:hidden;transition:border-color .3s;cursor:pointer}
+.pcard:hover{border-color:rgba(0,212,255,.2)}
+
+/* iframe preview */
+.ppreview{height:260px;position:relative;overflow:hidden;background:var(--bg)}
+.iframe-shell{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.iframe-shell iframe{width:300%;height:300%;border:none;transform:scale(.333);transform-origin:top left}
+
+/* Mock fallback */
+.mock{width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:22px}
+
+.povl{position:absolute;inset:0;background:rgba(5,5,8,.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.pcard:hover .povl{opacity:1}
+.povl-btn{padding:12px 28px;background:var(--cyan);color:var(--bg);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s;text-decoration:none;display:inline-block}
+.povl-btn:hover{transform:scale(1.04)}
+
+.pinfo{padding:20px 24px;border-top:1px solid var(--border)}
+.pcat{font-size:10px;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.pname{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
+.ptags{display:flex;gap:6px;flex-wrap:wrap}
+.ptag{font-size:10px;padding:3px 10px;border:1px solid var(--border);color:var(--muted2);letter-spacing:.5px}
+
+.cnav{display:flex;align-items:center;justify-content:space-between;padding:28px 52px 0}
+.carrows{display:flex;gap:12px}
+.ca{width:48px;height:48px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:18px;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.ca:hover{border-color:var(--cyan);color:var(--cyan)}
+.cdots{display:flex;gap:8px}
+.cd{width:24px;height:2px;background:var(--border);transition:all .3s;cursor:pointer}
+.cd.on{background:var(--cyan);width:40px}
+
+/* SERVICES */
+.svcs{background:var(--bg)}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.sc{background:var(--bg);padding:40px 32px;position:relative;overflow:hidden;transition:background .3s}
+.sc::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .4s}
+.sc:hover{background:var(--bg2)}
+.sc:hover::after{opacity:1}
+.sicon{font-size:24px;margin-bottom:20px;display:block}
+.stit{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
+.sdesc{font-size:13px;color:var(--muted2);line-height:1.75;margin-bottom:18px}
+.sprice{font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:2px}
+
+/* PROCESS */
+.proc{background:var(--bg2)}
+.psteps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative}
+.pline{position:absolute;top:31px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--rose))}
+.step{padding:0 20px;text-align:center}
+.stepn{width:62px;height:62px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--cyan);background:var(--bg2);position:relative;z-index:2;transition:all .3s}
+.step:hover .stepn{border-color:var(--cyan);background:var(--cdim)}
+.step-tit{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:8px}
+.step-txt{font-size:13px;color:var(--muted2);line-height:1.7}
+
+/* WHY */
+.why{background:var(--bg)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.why-items{display:flex;flex-direction:column;gap:14px;margin-top:48px}
+.wi{display:flex;gap:18px;align-items:flex-start;padding:24px;border:1px solid var(--border);background:var(--bg2);transition:border-color .3s}
+.wi:hover{border-color:rgba(0,212,255,.2)}
+.wic{font-size:22px;flex-shrink:0}
+.wit{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
+.wix{font-size:13px;color:var(--muted2);line-height:1.7}
+.qcard{background:var(--bg2);border:1px solid var(--border);padding:48px;margin-top:48px}
+.qm{font-family:'Syne',sans-serif;font-size:72px;line-height:.7;background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:20px}
+.qt{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;line-height:1.4;margin-bottom:24px}
+.ql{width:36px;height:1px;background:var(--cyan);margin:0 0 20px}
+.qs{font-size:13px;color:var(--muted2);line-height:1.85}
+
+/* CONTACT */
+.contact{background:var(--bg2)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.citems{display:flex;flex-direction:column;gap:24px;margin-top:48px}
+.ci{display:flex;gap:14px;align-items:flex-start}
+.ciicon{width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:border-color .3s}
+.ci:hover .ciicon{border-color:var(--cyan)}
+.cilbl{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.cival{font-size:14px;font-weight:500}
+.cform{display:flex;flex-direction:column;gap:14px;margin-top:48px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fgrp{display:flex;flex-direction:column;gap:7px}
+.flbl{font-size:10px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;font-weight:600}
+.finp{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:13px 16px;font-size:13px;font-family:'Inter',sans-serif;transition:border-color .3s;outline:none}
+.finp:focus{border-color:var(--cyan)}
+.finp::placeholder{color:var(--muted)}
+textarea.finp{resize:vertical;min-height:108px}
+.fsub{padding:15px;background:var(--cyan);color:var(--bg);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif;margin-top:4px}
+.fsub:hover{background:#00bfdf;box-shadow:0 8px 32px rgba(0,212,255,.28)}
+
+/* FOOTER */
+footer{padding:60px 52px 40px;border-top:1px solid var(--border);background:var(--bg)}
+.finner{max-width:1200px;margin:0 auto}
+.ftop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;flex-wrap:wrap;gap:36px}
+.flogo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:6px;background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.ftag{font-size:13px;color:var(--muted)}
+.fcols{display:flex;gap:52px;flex-wrap:wrap}
+.fcol h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;font-weight:600}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.fcol ul li a{font-size:13px;color:var(--muted2);text-decoration:none;transition:color .3s}
+.fcol ul li a:hover{color:var(--text)}
+.fbot{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px}
+.fcopy{font-size:12px;color:var(--muted)}
+.fmade{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.fmade span{color:var(--cyan)}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(32px);transition:all .85s cubic-bezier(.16,1,.3,1)}
+.r.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:16px 24px}
+  .nlinks,.ncta{display:none}
+  .hbg{display:flex}
+  section,footer{padding-left:24px;padding-right:24px}
+  section{padding-top:80px;padding-bottom:80px}
+  .port-header,.cnav{padding-left:24px;padding-right:24px}
+  .ctrack{padding-left:24px;padding-right:24px}
+  .future-grid,.why-grid,.cgrid{grid-template-columns:1fr}
+  .pillars,.sgrid{grid-template-columns:1fr}
+  .psteps{grid-template-columns:repeat(2,1fr)}
+  .pline{display:none}
+  .pcard{flex:0 0 300px}
+  .ftop{flex-direction:column}
+  .frow{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="preloader"><div class="pre-logo">OMNISYSTEMS</div><div class="pre-track"><div class="pre-fill"></div></div></div>
+<div class="grain"></div>
+<div class="cursor" id="cursor"></div>
+
+<nav id="nav">
+  <div class="nlogo">OMNISYSTEMS</div>
+  <ul class="nlinks">
+    <li><a href="#future">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="ncta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Start a Project</button>
+  <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
+</nav>
+<div class="mmenu" id="mmenu">
+  <a href="#future" onclick="cm()">About</a>
+  <a href="#portfolio" onclick="cm()">Portfolio</a>
+  <a href="#services" onclick="cm()">Services</a>
+  <a href="#contact" onclick="cm()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hgrid"></div>
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="particles" id="pts"></div>
+  <div class="hcontent">
+    <div class="hbadge"><span class="bdot"></span>Digital Infrastructure · Bahrain & GCC</div>
+    <h1 class="hero-h">The Future of<br><span class="ha">Business Is Digital</span></h1>
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span class="ti">Websites <span class="ts">·</span></span><span class="ti">AI Chatbots <span class="ts">·</span></span><span class="ti">Booking Systems <span class="ts">·</span></span><span class="ti">Dashboards <span class="ts">·</span></span><span class="ti">Digital Menus <span class="ts">·</span></span><span class="ti">Automation <span class="ts">·</span></span><span class="ti">Property Pages <span class="ts">·</span></span><span class="ti">Invoice Tools <span class="ts">·</span></span><span class="ti">Inventory Systems <span class="ts">·</span></span>
+        <span class="ti">Websites <span class="ts">·</span></span><span class="ti">AI Chatbots <span class="ts">·</span></span><span class="ti">Booking Systems <span class="ts">·</span></span><span class="ti">Dashboards <span class="ts">·</span></span><span class="ti">Digital Menus <span class="ts">·</span></span><span class="ti">Automation <span class="ts">·</span></span><span class="ti">Property Pages <span class="ts">·</span></span><span class="ti">Invoice Tools <span class="ts">·</span></span><span class="ti">Inventory Systems <span class="ts">·</span></span>
+      </div>
+    </div>
+    <p class="hsub">We build the digital systems that run modern businesses — websites, AI tools, automation, and more. One-time contract. You own it forever.</p>
+    <div class="hbtns">
+      <a href="#portfolio" class="bp">See Our Work</a>
+      <a href="#contact" class="bg">Get a Quote</a>
+    </div>
+  </div>
+  <div class="hscroll"><span class="stxt">Scroll</span><div class="sline"></div></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mstrip">
+  <div class="minner">
+    <span class="mi">Bahrain <span class="md"></span></span><span class="mi">Saudi Arabia <span class="md"></span></span><span class="mi">UAE <span class="md"></span></span><span class="mi">Kuwait <span class="md"></span></span><span class="mi">Qatar <span class="md"></span></span><span class="mi">One-Time Contract <span class="md"></span></span><span class="mi">You Own It Forever <span class="md"></span></span><span class="mi">Fast Delivery <span class="md"></span></span><span class="mi">Bahrain <span class="md"></span></span><span class="mi">Saudi Arabia <span class="md"></span></span><span class="mi">UAE <span class="md"></span></span><span class="mi">Kuwait <span class="md"></span></span><span class="mi">Qatar <span class="md"></span></span><span class="mi">One-Time Contract <span class="md"></span></span><span class="mi">You Own It Forever <span class="md"></span></span><span class="mi">Fast Delivery <span class="md"></span></span>
+  </div>
+</div>
+
+<!-- FUTURE -->
+<section class="future" id="future">
+  <div class="inner">
+    <div class="future-grid">
+      <div class="r">
+        <div class="eyebrow">The Shift Is Happening Now</div>
+        <h2 class="stitle">Businesses That Go Digital<br>Don't Just Survive —<br>They Lead</h2>
+      </div>
+      <div class="r d1">
+        <p class="fp">The GCC market is moving faster than most businesses realise. Customers search online, book online, and make decisions in seconds. <strong>A business without a proper digital presence is invisible.</strong></p>
+        <p class="fp">OmniSystems exists to close that gap. We build practical, professional digital systems for businesses across Bahrain and the GCC — websites that convert, tools that automate, and systems that save time every single day.</p>
+        <p class="fp">No bloated agencies. No ongoing fees. <strong>One project, one contract, one fixed price.</strong></p>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar r"><span class="pillar-icon">🌐</span><div class="pillar-title">Digital Presence</div><div class="pillar-text">Your website is your storefront, your CV, and your sales team all in one. We build it right the first time.</div></div>
+      <div class="pillar r d1"><span class="pillar-icon">⚙️</span><div class="pillar-title">Smart Automation</div><div class="pillar-text">Bookings, inquiries, menus, invoices — systems that work while you sleep, so you don't have to do everything manually.</div></div>
+      <div class="pillar r d2"><span class="pillar-icon">📈</span><div class="pillar-title">Built to Scale</div><div class="pillar-text">Every system we build is designed to grow with your business. Start with a website, add a chatbot later — it all connects.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="port-section" id="portfolio">
+  <div class="port-header r">
+    <div class="eyebrow">Our Work</div>
+    <h2 class="stitle">10 Industries.<br>10 Live Demos.</h2>
+    <p class="ssub">Drag to browse or use the arrows. Click any card to open the full demo site.</p>
+  </div>
+  <div class="ctrack" id="ctrack">
+
+    <!-- 1 Salon -->
+    <div class="pcard" onclick="openDemo('demos/salon.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#0a0314,#1a0828)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;letter-spacing:3px;background:linear-gradient(135deg,#7c3aed,#f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">SALON</span><span style="font-size:9px;color:rgba(255,255,255,.25);letter-spacing:2px">MANAMA</span></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;line-height:1">Where Style<br>Meets Craft</div><div style="margin-top:12px;display:flex;gap:6px"><div style="padding:6px 12px;background:linear-gradient(135deg,#7c3aed,#f43f5e);color:#fff;font-size:9px;font-weight:700;letter-spacing:1px">BOOK NOW</div></div></div>
+          <div style="display:flex;gap:14px"><div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#a78bfa">12+</div><div style="font-size:8px;color:rgba(255,255,255,.25);letter-spacing:1px">STYLISTS</div></div><div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#a78bfa">5★</div><div style="font-size:8px;color:rgba(255,255,255,.25);letter-spacing:1px">RATED</div></div></div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/salon.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Beauty & Wellness</div><div class="pname">Salon</div><div class="ptags"><span class="ptag">Booking</span><span class="ptag">Gallery</span><span class="ptag">Services</span></div></div>
+    </div>
+
+    <!-- 2 Restaurant -->
+    <div class="pcard" onclick="openDemo('demos/restaurant.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#0c0800,#1a1000)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;letter-spacing:3px;color:#c9a84c">RESTAURANT</span><span style="font-size:9px;color:rgba(201,168,76,.35);letter-spacing:2px">FINE DINING</span></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0ece4;line-height:1">Authentic<br>Cuisine</div><div style="margin-top:12px;display:flex;gap:6px"><div style="padding:6px 14px;background:#c9a84c;color:#0c0800;font-size:9px;font-weight:700;letter-spacing:1px">RESERVE</div><div style="padding:6px 14px;border:1px solid rgba(201,168,76,.3);color:#c9a84c;font-size:9px;letter-spacing:1px">MENU</div></div></div>
+          <div style="display:flex;gap:14px"><div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#c9a84c">200+</div><div style="font-size:8px;color:rgba(240,236,228,.25);letter-spacing:1px">DISHES</div></div><div style="text-align:center"><div style="font-size:16px;font-weight:800;color:#c9a84c">4.9</div><div style="font-size:8px;color:rgba(240,236,228,.25);letter-spacing:1px">RATING</div></div></div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/restaurant.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Food & Beverage</div><div class="pname">Restaurant</div><div class="ptags"><span class="ptag">QR Menu</span><span class="ptag">Reservations</span></div></div>
+    </div>
+
+    <!-- 3 Garage / Dealership -->
+    <div class="pcard" onclick="openDemo('demos/garage.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#060606,#0f0f0f)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:800;letter-spacing:3px;color:#c9a84c">CAR DEALERSHIP</span><div style="width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981"></div></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f0ece4;line-height:1">Premium<br>Vehicles</div><div style="margin-top:12px;display:flex;gap:5px;flex-wrap:wrap"><span style="padding:3px 8px;border:1px solid rgba(201,168,76,.3);font-size:9px;color:#c9a84c">BMW</span><span style="padding:3px 8px;border:1px solid rgba(201,168,76,.3);font-size:9px;color:#c9a84c">MERCEDES</span><span style="padding:3px 8px;border:1px solid rgba(201,168,76,.3);font-size:9px;color:#c9a84c">AUDI</span></div></div>
+          <div style="padding:8px 14px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);font-size:9px;color:#c9a84c;letter-spacing:2px">VIEW INVENTORY →</div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/garage.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Automotive</div><div class="pname">Car Dealership</div><div class="ptags"><span class="ptag">Inventory</span><span class="ptag">Test Drive</span></div></div>
+    </div>
+
+    <!-- 4 Clinic -->
+    <div class="pcard" onclick="openDemo('demos/clinic.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#020810,#040f1c)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#7eb0ff">MEDICAL CLINIC</span><span style="padding:3px 8px;border:1px solid rgba(126,176,255,.3);font-size:8px;color:#7eb0ff;border-radius:40px">ACCEPTING</span></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f0f0f8;line-height:1">Your Health,<br>Our Priority</div><div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 8px;background:rgba(126,176,255,.08);border:1px solid rgba(126,176,255,.2);font-size:9px;color:#7eb0ff">GENERAL</span><span style="padding:3px 8px;background:rgba(126,176,255,.08);border:1px solid rgba(126,176,255,.2);font-size:9px;color:#7eb0ff">DENTAL</span></div></div>
+          <div style="padding:8px 14px;background:#1a6bff;color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-align:center">BOOK APPOINTMENT</div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/clinic.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Healthcare</div><div class="pname">Medical Clinic</div><div class="ptags"><span class="ptag">Appointments</span><span class="ptag">Specialties</span></div></div>
+    </div>
+
+    <!-- 5 Real Estate -->
+    <div class="pcard" onclick="openDemo('demos/realestate.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#0c0800,#1a1000)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#c9a84c">REAL ESTATE</span><span style="font-size:9px;color:rgba(201,168,76,.35)">BAHRAIN</span></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0ece4;line-height:1">Find Your<br>Property</div><div style="margin-top:12px;display:flex;gap:14px"><div><div style="font-size:15px;font-weight:800;color:#c9a84c">340+</div><div style="font-size:8px;color:rgba(240,236,228,.25)">LISTINGS</div></div></div></div>
+          <div style="padding:8px 14px;background:#c9a84c;color:#0c0800;font-size:9px;font-weight:700;letter-spacing:2px">BROWSE LISTINGS</div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/realestate.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Real Estate</div><div class="pname">Property Agency</div><div class="ptags"><span class="ptag">Listings</span><span class="ptag">Viewings</span></div></div>
+    </div>
+
+    <!-- 6 Gym -->
+    <div class="pcard" onclick="openDemo('demos/gym.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#0c0200,#180600)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:900;letter-spacing:4px;color:#f97316">GYM & FITNESS</span><div style="width:7px;height:7px;border-radius:50%;background:#f97316"></div></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0f0f8;line-height:1">Train Hard.<br>Live Strong.</div><div style="margin-top:12px;display:flex;gap:14px"><div><div style="font-size:15px;font-weight:800;color:#f97316">24/7</div><div style="font-size:8px;color:rgba(240,240,248,.25)">ACCESS</div></div><div><div style="font-size:15px;font-weight:800;color:#f97316">50+</div><div style="font-size:8px;color:rgba(240,240,248,.25)">CLASSES</div></div></div></div>
+          <div style="display:flex;gap:6px"><div style="padding:8px 14px;background:#f97316;color:#fff;font-size:9px;font-weight:700;letter-spacing:2px">JOIN NOW</div></div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/gym.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Fitness & Sports</div><div class="pname">Gym</div><div class="ptags"><span class="ptag">Classes</span><span class="ptag">Membership</span></div></div>
+    </div>
+
+    <!-- 7 Hotel -->
+    <div class="pcard" onclick="openDemo('demos/hotel.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#080806,#100e08)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;color:#b8986a">LUXURY HOTEL</span><span style="color:#b8986a;font-size:11px">★★★★★</span></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f5f2ec;line-height:1">Luxury<br>Redefined</div><div style="margin-top:8px;font-size:10px;color:rgba(245,242,236,.25);letter-spacing:1px">MANAMA WATERFRONT</div></div>
+          <div style="display:flex;gap:6px"><div style="padding:8px 14px;background:#b8986a;color:#080806;font-size:9px;font-weight:700;letter-spacing:2px">RESERVE</div><div style="padding:8px 14px;border:1px solid rgba(184,152,106,.3);color:#b8986a;font-size:9px;letter-spacing:2px">SUITES</div></div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/hotel.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Hospitality</div><div class="pname">Hotel</div><div class="ptags"><span class="ptag">Room Booking</span><span class="ptag">Gallery</span></div></div>
+    </div>
+
+    <!-- 8 Law Firm -->
+    <div class="pcard" onclick="openDemo('demos/lawfirm.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#08060e,#100a18)">
+          <div><span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:#a78bfa">LAW FIRM</span></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f0f0f8;line-height:1.05">Legal Excellence<br>Since 2005</div><div style="width:36px;height:2px;background:linear-gradient(90deg,#7c3aed,#a78bfa);margin:12px 0"></div><div style="font-size:10px;color:rgba(240,240,248,.3);line-height:1.6">Corporate · Civil · Real Estate</div></div>
+          <div style="padding:8px 14px;border:1px solid rgba(167,139,250,.3);color:#a78bfa;font-size:9px;letter-spacing:3px;text-align:center">REQUEST CONSULTATION</div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/lawfirm.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Legal Services</div><div class="pname">Law Firm</div><div class="ptags"><span class="ptag">Practice Areas</span><span class="ptag">Consultation</span></div></div>
+    </div>
+
+    <!-- 9 Tutoring -->
+    <div class="pcard" onclick="openDemo('demos/tutoring.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#020a06,#061410)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;color:#34d399">TUTORING</span><span style="padding:3px 8px;border:1px solid rgba(52,211,153,.3);font-size:8px;color:#34d399;border-radius:40px">LIVE NOW</span></div>
+          <div><div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f0f0f8;line-height:1">Unlock Your<br>Potential</div><div style="margin-top:12px;display:flex;gap:5px;flex-wrap:wrap"><span style="padding:3px 8px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);font-size:8px;color:#34d399">MATHS</span><span style="padding:3px 8px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);font-size:8px;color:#34d399">SCIENCE</span><span style="padding:3px 8px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);font-size:8px;color:#34d399">ENGLISH</span></div></div>
+          <div style="padding:8px 14px;background:#34d399;color:#020a06;font-size:9px;font-weight:700;letter-spacing:2px;text-align:center">BOOK FREE TRIAL</div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/tutoring.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">Education</div><div class="pname">Tutoring Platform</div><div class="ptags"><span class="ptag">Session Booking</span><span class="ptag">Subjects</span></div></div>
+    </div>
+
+    <!-- 10 AI Chatbot -->
+    <div class="pcard" onclick="openDemo('demos/chatbot.html')">
+      <div class="ppreview">
+        <div class="mock" style="background:linear-gradient(135deg,#020608,#041010)">
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;color:#25d366">WHATSAPP AI</div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#f0f0f8;line-height:1.05">24/7 AI<br>Assistant</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:5px">
+              <div style="padding:6px 10px;background:rgba(37,211,102,.08);border-radius:8px 8px 8px 2px;font-size:9px;color:rgba(240,244,240,.6);max-width:80%">Hi! How can I help? 👋</div>
+              <div style="padding:6px 10px;background:rgba(37,211,102,.15);border-radius:8px 8px 2px 8px;font-size:9px;color:#25d366;margin-left:auto;max-width:70%">Book appointment</div>
+              <div style="padding:6px 10px;background:rgba(37,211,102,.08);border-radius:8px 8px 8px 2px;font-size:9px;color:rgba(240,244,240,.6);max-width:80%">Pick your slot ✅</div>
+            </div>
+          </div>
+          <div style="padding:8px 14px;background:#25d366;color:#020608;font-size:9px;font-weight:700;letter-spacing:2px;text-align:center">SEE IT LIVE</div>
+        </div>
+        <div class="povl"><a class="povl-btn" href="demos/chatbot.html" target="_blank" onclick="event.stopPropagation()">Open Demo →</a></div>
+      </div>
+      <div class="pinfo"><div class="pcat">AI Automation</div><div class="pname">WhatsApp AI Chatbot</div><div class="ptags"><span class="ptag">Live Chat</span><span class="ptag">Auto-Reply</span></div></div>
+    </div>
+
+  </div>
+  <div class="cnav">
+    <div class="carrows">
+      <button class="ca" id="prev">←</button>
+      <button class="ca" id="next">→</button>
+    </div>
+    <div class="cdots" id="cdots"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="svcs" id="services">
+  <div class="inner">
+    <div class="r" style="margin-bottom:60px">
+      <div class="eyebrow">What We Build</div>
+      <h2 class="stitle">Every Service.<br>One Fixed Price.</h2>
+      <p class="ssub">No retainers, no ongoing fees. You pay once and own it completely.</p>
+    </div>
+    <div class="sgrid">
+      <div class="sc r"><span class="sicon">🌐</span><div class="stit">Business Website</div><div class="sdesc">Fast, mobile-first, tailored to your industry. The first thing customers see — it needs to count.</div><div class="sprice">From 150 BHD</div></div>
+      <div class="sc r d1"><span class="sicon">🤖</span><div class="stit">WhatsApp AI Chatbot</div><div class="sdesc">Handles customer inquiries, FAQs, and bookings on WhatsApp automatically — 24/7.</div><div class="sprice">From 200 BHD</div></div>
+      <div class="sc r d2"><span class="sicon">📊</span><div class="stit">Business Dashboard</div><div class="sdesc">Visual dashboards for sales, inventory, or any data your business tracks daily.</div><div class="sprice">From 250 BHD</div></div>
+      <div class="sc r"><span class="sicon">📅</span><div class="stit">Booking System</div><div class="sdesc">Online appointment booking for clinics, salons, tutors, and service businesses.</div><div class="sprice">From 180 BHD</div></div>
+      <div class="sc r d1"><span class="sicon">🍽️</span><div class="stit">Digital QR Menu</div><div class="sdesc">Scannable menus for restaurants and cafes. Update items anytime, no printing needed.</div><div class="sprice">From 100 BHD</div></div>
+      <div class="sc r d2"><span class="sicon">📄</span><div class="stit">Invoice Generator</div><div class="sdesc">Branded invoice tool — generate and send PDF invoices to clients in seconds.</div><div class="sprice">From 120 BHD</div></div>
+      <div class="sc r"><span class="sicon">💌</span><div class="stit">Digital Business Card</div><div class="sdesc">Tap or scan to share your contact info, links, and portfolio. Always up to date.</div><div class="sprice">From 60 BHD</div></div>
+      <div class="sc r d1"><span class="sicon">📦</span><div class="stit">Inventory Tracker</div><div class="sdesc">Simple stock management for small shops. Track products, quantities, and low-stock alerts.</div><div class="sprice">From 150 BHD</div></div>
+      <div class="sc r d2"><span class="sicon">🏠</span><div class="stit">Property Listing Page</div><div class="sdesc">Dedicated website for your property or real estate portfolio. Units, amenities, contact.</div><div class="sprice">From 150 BHD</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="proc" id="process">
+  <div class="inner">
+    <div class="r" style="text-align:center">
+      <div class="eyebrow">How It Works</div>
+      <h2 class="stitle">From Brief to Live<br>in Days, Not Months</h2>
+    </div>
+    <div class="psteps">
+      <div class="pline"></div>
+      <div class="step r"><div class="stepn">01</div><div class="step-tit">You Brief Us</div><div class="step-txt">Tell us what you need. We ask the right questions and understand your business.</div></div>
+      <div class="step r d1"><div class="stepn">02</div><div class="step-tit">We Quote</div><div class="step-txt">Fixed price, fixed scope, fixed timeline. You approve before anything starts.</div></div>
+      <div class="step r d2"><div class="stepn">03</div><div class="step-tit">We Build</div><div class="step-txt">We build and share progress. Most projects done in 3–7 days.</div></div>
+      <div class="step r d3"><div class="stepn">04</div><div class="step-tit">You Own It</div><div class="step-txt">Final delivery. No recurring fees. No dependency on us. It's yours.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="inner">
+    <div class="why-grid">
+      <div>
+        <div class="eyebrow r">Why OmniSystems</div>
+        <h2 class="stitle r">We Deliver What<br>Others Just Promise</h2>
+        <div class="why-items">
+          <div class="wi r"><span class="wic">⚡</span><div><div class="wit">Fast Turnaround</div><div class="wix">Most projects in 3–7 days. No waiting weeks for something that should take hours.</div></div></div>
+          <div class="wi r d1"><span class="wic">💰</span><div><div class="wit">One-Time Price. You Own It.</div><div class="wix">Pay once. No monthly fees, no retainers, no lock-in. The work is completely yours.</div></div></div>
+          <div class="wi r d2"><span class="wic">🎯</span><div><div class="wit">Built for This Market</div><div class="wix">We understand Bahrain and the GCC — the audience, the culture, what actually works here.</div></div></div>
+          <div class="wi r d3"><span class="wic">📋</span><div><div class="wit">Contract Protected</div><div class="wix">Every project backed by a signed contract. Scope, price, and timeline in writing.</div></div></div>
+        </div>
+      </div>
+      <div class="r d1">
+        <div class="qcard">
+          <span class="qm">"</span>
+          <div class="qt">Most businesses in Bahrain are still running on paper, word of mouth, and WhatsApp screenshots. That's the gap we fill.</div>
+          <div class="ql"></div>
+          <div class="qs">The businesses that invest in digital infrastructure today — a proper website, a booking system, an AI chatbot — are the ones that will be ahead of their competition in three years. We make that accessible at a fair, one-time price.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="inner">
+    <div class="cgrid">
+      <div>
+        <div class="eyebrow r">Get In Touch</div>
+        <h2 class="stitle r">Start Your<br>Project Today</h2>
+        <div class="citems">
+          <div class="ci r"><div class="ciicon">💬</div><div><div class="cilbl">WhatsApp</div><div class="cival">+973 XXXX XXXX</div></div></div>
+          <div class="ci r d1"><div class="ciicon">✉️</div><div><div class="cilbl">Email</div><div class="cival">hello@omnisystems.bh</div></div></div>
+          <div class="ci r d2"><div class="ciicon">📍</div><div><div class="cilbl">Location</div><div class="cival">Manama, Kingdom of Bahrain</div></div></div>
+          <div class="ci r d3"><div class="ciicon">⏱️</div><div><div class="cilbl">Response Time</div><div class="cival">Within a few hours</div></div></div>
+        </div>
+      </div>
+      <div class="r d1">
+        <div class="eyebrow" style="margin-bottom:20px">Send a Message</div>
+        <div class="cform">
+          <div class="frow">
+            <div class="fgrp"><label class="flbl">Your Name</label><input class="finp" type="text" placeholder="Ahmed Al Khalifa"></div>
+            <div class="fgrp"><label class="flbl">WhatsApp</label><input class="finp" type="text" placeholder="+973 XXXX XXXX"></div>
+          </div>
+          <div class="fgrp">
+            <label class="flbl">Service Needed</label>
+            <select class="finp">
+              <option value="" disabled selected>Select a service...</option>
+              <option>Business Website</option><option>WhatsApp AI Chatbot</option><option>Business Dashboard</option><option>Booking System</option><option>Digital QR Menu</option><option>Invoice Generator</option><option>Digital Business Card</option><option>Inventory Tracker</option><option>Property Listing Page</option><option>Other</option>
+            </select>
+          </div>
+          <div class="fgrp"><label class="flbl">Project Details</label><textarea class="finp" placeholder="Tell us about your business and what you need..."></textarea></div>
+          <button class="fsub" id="fsub">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="finner">
+    <div class="ftop">
+      <div>
+        <div class="flogo">OMNISYSTEMS</div>
+        <div class="ftag">Digital infrastructure for Bahrain & the GCC.<br>Built to work. Delivered to last.</div>
+      </div>
+      <div class="fcols">
+        <div class="fcol"><h4>Services</h4><ul><li><a href="#services">Websites</a></li><li><a href="#services">WhatsApp Chatbot</a></li><li><a href="#services">Dashboards</a></li><li><a href="#services">Booking Systems</a></li></ul></div>
+        <div class="fcol"><h4>Company</h4><ul><li><a href="#future">About</a></li><li><a href="#portfolio">Portfolio</a></li><li><a href="#process">Process</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      </div>
+    </div>
+    <div class="fbot">
+      <div class="fcopy">© 2025 OmniSystems. All rights reserved.</div>
+      <div class="fmade">Built in <span>Bahrain</span> · Powered by <span>OmniSystems</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Preloader
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('preloader').classList.add('out'),900));
+
+// Cursor
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60));
+
+// Mobile menu
+const hbg=document.getElementById('hbg'),mm=document.getElementById('mmenu');
+hbg.addEventListener('click',()=>{
+  mm.classList.toggle('open');
+  const s=hbg.querySelectorAll('span'),o=mm.classList.contains('open');
+  s[0].style.transform=o?'rotate(45deg) translate(5px,5px)':'';
+  s[1].style.opacity=o?'0':'1';
+  s[2].style.transform=o?'rotate(-45deg) translate(5px,-5px)':'';
+});
+function cm(){mm.classList.remove('open');hbg.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='1'})}
+
+// Particles
+(()=>{
+  const c=document.getElementById('pts');
+  for(let i=0;i<28;i++){
+    const p=document.createElement('div');
+    p.className='p';
+    p.style.cssText=`left:${Math.random()*100}%;bottom:-4px;width:${1+Math.random()*1.5}px;height:${1+Math.random()*1.5}px;animation-duration:${7+Math.random()*10}s;animation-delay:${Math.random()*9}s`;
+    c.appendChild(p);
+  }
+})();
+
+// Reveal
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')}),{threshold:.08});
+document.querySelectorAll('.r').forEach(r=>obs.observe(r));
+
+// Carousel
+const track=document.getElementById('ctrack');
+const cards=track.querySelectorAll('.pcard');
+const dotsWrap=document.getElementById('cdots');
+let cur=0;
+
+cards.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='cd'+(i===0?' on':'');
+  d.addEventListener('click',()=>go(i));
+  dotsWrap.appendChild(d);
+});
+
+function go(i){
+  cur=Math.max(0,Math.min(i,cards.length-1));
+  track.scrollTo({left:cards[cur].offsetLeft-52,behavior:'smooth'});
+  dotsWrap.querySelectorAll('.cd').forEach((d,j)=>d.classList.toggle('on',j===cur));
+}
+
+document.getElementById('prev').addEventListener('click',()=>go(cur-1));
+document.getElementById('next').addEventListener('click',()=>go(cur+1));
+
+// Drag scroll
+let dragging=false,sx=0,sl=0;
+track.addEventListener('mousedown',e=>{dragging=true;sx=e.pageX;sl=track.scrollLeft;track.classList.add('drag')});
+document.addEventListener('mouseup',()=>{dragging=false;track.classList.remove('drag');snap()});
+document.addEventListener('mousemove',e=>{if(dragging)track.scrollLeft=sl-(e.pageX-sx)});
+track.addEventListener('touchstart',e=>{sx=e.touches[0].pageX;sl=track.scrollLeft},{passive:true});
+track.addEventListener('touchend',snap);
+track.addEventListener('touchmove',e=>{track.scrollLeft=sl-(e.touches[0].pageX-sx)},{passive:true});
+
+function snap(){
+  let c2=0,md=Infinity;
+  cards.forEach((c,i)=>{const d=Math.abs(c.offsetLeft-52-track.scrollLeft);if(d<md){md=d;c2=i}});
+  cur=c2;
+  dotsWrap.querySelectorAll('.cd').forEach((d,j)=>d.classList.toggle('on',j===cur));
+}
+track.addEventListener('scroll',()=>{clearTimeout(track._t);track._t=setTimeout(snap,100)},{passive:true});
+
+// Open demo
+function openDemo(url){window.open(url,'_blank')}
+
+// Form submit
+document.getElementById('fsub').addEventListener('click',function(){
+  this.textContent='Message Sent ✓';this.style.background='#10b981';
+  setTimeout(()=>{this.textContent='Send Message →';this.style.background=''},3000);
+});
+</script>
+</body>
+</html>
